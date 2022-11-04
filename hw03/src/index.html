@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1900">
+  <title>TypeScript HTML App</title>
+  <style>
+    html, body {
+        margin: 0;
+        overflow: hidden;
+    }
+    h4, span{
+      font-size: 10px !important;
+    }
+    .Sliders{
+      position: absolute !important;
+      top: 20px;
+      left: 150px;
+      background: rgba(0,0,0,0.3);
+    }
+    .LandarParam{
+      position: absolute !important;
+      top: 20px;
+      right: 150px;
+      /* background: rgba(0,0,0,0.3); */
+    }
+    .SpecialParam{
+      position: absolute !important;
+      top: 50%;
+      right: 150px;
+      /* background: rgba(0,0,0,0.3); */
+    }
+  </style>
+  <!-- Pollyfill script -->
+  <script src="https://unpkg.com/core-js-bundle@3.6.1/minified.js"></script>
+  <!-- Live2DCubismCore script -->
+  <script src = "./Core/live2dcubismcore.js"></script>
+  <!-- Build script -->
+  <script src = "./dist/bundle.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+  <div class="Sliders">
+    <div class="col">
+      <div id="div ParamAngleX" style="border-width:1px; border-style:solid;">
+        <h4>ParamAngleX</h4>
+        <span>-30</span>
+        <input id="ParamAngleX" type="range" step="0.1" min="-30" max="30" value="0" >
+        <span>30</span>
+      </div>
+
+      <div id="div ParamAngleY" style="border-width:1px; border-style:solid;">
+        <h4>ParamAngleY</h4>
+        <span>-30</span>
+        <input id="ParamAngleY" type="range" step="0.1" min="-30" max="30" value="0" >
+        <span>30</span>
+      </div>
+
+      <div id="div ParamAngleZ" style="border-width:1px; border-style:solid;">
+        <h4>ParamAngleZ</h4>
+        <span>-30</span>
+        <input id="ParamAngleZ" type="range" step="0.1" min="-30" max="30" value="0" >
+        <span>30</span>
+      </div>
+
+      <div id="div ParamBrowLY" style="border-width:1px; border-style:solid;">
+        <h4>ParamBrowLY</h4>
+        <span>-1</span>
+        <input id="ParamBrowLY" type="range" step="0.1" min="-1" max="1" value="0" >
+        <span>1</span>
+      </div>
+
+      <div id="div ParamBrowRY" style="border-width:1px; border-style:solid;">
+        <h4>ParamBrowRY</h4>
+        <span>-1</span>
+        <input id="ParamBrowRY" type="range" step="0.1" min="-1" max="1" value="0" >
+        <span>1</span>
+      </div>
+
+      <div id="div ParamBrowLX" style="border-width:1px; border-style:solid;">
+        <h4>ParamBrowLX</h4>
+        <span>-1</span>
+        <input id="ParamBrowLX" type="range" step="0.1" min="-1" max="1" value="0" >
+        <span>1</span>
+      </div>
+
+      <div id="div ParamBrowRX" style="border-width:1px; border-style:solid;">
+        <h4>ParamBrowRX</h4>
+        <span>-1</span>
+        <input id="ParamBrowRX" type="range" step="0.1" min="-1" max="1" value="0" >
+        <span>1</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 標準參數 -->
+  <div class="LandarParam">
+    <div class="col">
+      <label for="LandarSelect">標準參數</label>
+      <div style="border-width:1px; border-style:solid;">
+        <div>
+          <h4 data-bind="value: addrPrefix" id="LandarName">參數名稱</h4>
+        </div>
+        <label for="LandarParam_minName" style="font-size: 10px;">最小值 :</label>
+        <input type="text" id="LandarMin" name="LandarParam_minName"minlength="1" maxlength="8" size="3" value="-1">
+        <input id="LandarSlider" type="range" step="0.1" min="-30" max="30" value="0" >
+        <label for="LandarParam_maxName" style="font-size: 10px;">最大值 :</label>
+        <input type="text" id="LandarMax" name="LandarParam_maxName"minlength="1" maxlength="8" size="3" value="1"><br><br>
+      </div>
+    </div>
+    <br>
+    <select id="LandarSelect">
+      <option value="">---請選擇---</option>
+    </select>
+  </div>
+
+  <!-- 特定參數 -->
+  <div class="SpecialParam">
+    <div class="col">
+      <label for="SpecialSelect">特定參數</label>
+      <div style="border-width:1px; border-style:solid;">
+        <div>
+          <h4 data-bind="value: addrPrefix" id="SpecialName">參數名稱</h4>
+        </div>
+        <label for="SpecialParam_minName" style="font-size: 10px;">最小值 :</label>
+        <input type="text" id="SpecialMin" name="SpecialParam_minName"minlength="1" maxlength="8" size="2" value="0">
+        <input id="SpecialSlider" type="range" step="0.1" min="-30" max="30" value="0" >
+        <label for="SpecialParam_maxName" style="font-size: 10px;">最大值 :</label>
+        <input type="text" id="SpecialMax" name="SpecialParam_maxName"minlength="1" maxlength="8" size="2" value="1"><br><br>
+      </div>
+    </div>
+    <br>
+    <select id="SpecialSelect">
+      <option value="">---請選擇---</option>
+    </select>
+  </div>
+
+  <!-- <script src="main.js"></script> -->
+
+  <script>
+
+    function Back(){
+      window.location="../index.html";
+    }
+
+    // 選單
+    const LandarSelect = document.getElementById("LandarSelect");
+    const SpecialSelect = document.getElementById("SpecialSelect");
+
+    // Label
+    const LandarName = document.getElementById("LandarName");
+    const SpecialName = document.getElementById("SpecialName");
+
+    const LandarMin = document.getElementById("LandarMin");
+    const LandarMax = document.getElementById("LandarMax");
+    const LandarSlider = document.getElementById("LandarSlider");
+    const SpecialMin = document.getElementById("SpecialMin");
+    const SpecialMax = document.getElementById("SpecialMax");
+    const SpecialSlider = document.getElementById("SpecialSlider");
+
+    // 標準參數: 最大值、最小值、初始值、目前狀態值
+    const LandarParams = {
+      'ParamAngleX':{'max':30, 'min':-30, 'start':0, 'cur':0}, 'ParamAngleY':{'max':30, 'min':-30, 'start':0, 'cur':0}, 'ParamAngleZ':{'max':30, 'min':-30, 'start':0, 'cur':0},
+      'ParamEyeLOpen':{'max':1, 'min':0, 'start':1, 'cur':1}, 'ParamEyeLSmile':{'max':1, 'min':0, 'start':0, 'cur':0}, 'ParamEyeROpen':{'max':1, 'min':0, 'start':1, 'cur':1}, 'ParamEyeRSmile':{'max':1, 'min':0, 'start':0, 'cur':0},
+      'ParamEyeBallX':{'max':1, 'min':-1, 'start':0, 'cur':0}, 'ParamEyeBallY':{'max':1, 'min':-1, 'start':0, 'cur':0}, 'ParamEyeBallForm':{'max':1, 'min':-1, 'start':0, 'cur':0},
+      'ParamBrowLY':{'max':1, 'min':-1, 'start':0, 'cur':0}, 'ParamBrowRY':{'max':1, 'min':-1, 'start':0, 'cur':0}, 'ParamBrowLX':{'max':1, 'min':-1, 'start':0, 'cur':0}, 'ParamBrowRX':{'max':1, 'min':-1, 'start':0, 'cur':0}, 'ParamBrowLAngle':{'max':1, 'min':-1, 'start':0, 'cur':0}, 'ParamBrowRAngle':{'max':1, 'min':-1, 'start':0, 'cur':0}, 'ParamBrowLForm':{'max':1, 'min':-1, 'start':0, 'cur':0}, 'ParamBrowRForm':{'max':1, 'min':-1, 'start':0, 'cur':0},
+      'ParamMouthForm':{'max':1, 'min':-1, 'start':0, 'cur':0}, 'ParamMouthOpenY':{'max':1, 'min':0, 'start':0, 'cur':0}, 'ParamCheek':{'max':1, 'min':0, 'start':0, 'cur':0},
+      'ParamBodyAngleX':{'max':10, 'min':-10, 'start':0, 'cur':0}, 'ParamBodyAngleY':{'max':10, 'min':-10, 'start':0, 'cur':0}, 'ParamBodyAngleZ':{'max':10, 'min':-10, 'start':0, 'cur':0}, 'ParamBreath':{'max':1, 'min':0, 'start':0, 'cur':0},
+      'ParamArmLA':{'max':30, 'min':-30, 'start':0, 'cur':0}, 'ParamArmRA':{'max':30, 'min':-30, 'start':0, 'cur':0}, 'ParamArmLB':{'max':30, 'min':-30, 'start':0, 'cur':0}, 'ParamArmRB':{'max':30, 'min':-30, 'start':0, 'cur':0},
+      'ParamHandL':{'max':10, 'min':-10, 'start':0, 'cur':0}, 'ParamHandR':{'max':10, 'min':-10, 'start':0, 'cur':0},
+      'ParamHairFront':{'max':1, 'min':-1, 'start':0, 'cur':0}, 'ParamHairSide':{'max':1, 'min':-1, 'start':0, 'cur':0}, 'ParamHairBack':{'max':1, 'min':-1, 'start':0, 'cur':0}, 'ParamHairFluffy':{'max':1, 'min':-1, 'start':0, 'cur':0},
+      'ParamShoulderY':{'max':10, 'min':-10, 'start':0, 'cur':0},
+      'ParamBustX':{'max':1, 'min':-1, 'start':0, 'cur':0}, 'ParamBustY':{'max':1, 'min':-1, 'start':0, 'cur':0}, 'ParamBaseX':{'max':10, 'min':-10, 'start':0, 'cur':0}, 'ParamBaseY':{'max':10, 'min':-10, 'start':0, 'cur':0}
+    };
+
+
+    // 讀出角色所有參數
+    $.getJSON("./Resources/Haru/Haru.cdi3.json", function(data) {
+      data.Parameters.forEach(element => {
+
+        let option = document.createElement("option");
+        option.text = element.Id;
+        option.value = element.Id;
+        if(element.Id in LandarParams)
+          LandarSelect.appendChild(option);
+        else
+          SpecialSelect.appendChild(option);
+      });
+
+    })
+
+    // 下拉式選單選擇標準參數
+    LandarSelect.addEventListener('change', function(){
+      let name = LandarSelect.value;
+      // 設定參數名稱與最大最小值
+      LandarName.innerHTML = "參數名稱：" + name;
+      LandarMin.value = LandarSlider.min = LandarParams[name].min;
+      LandarMax.value = LandarSlider.max = LandarParams[name].max;
+
+      LandarSlider.value = LandarParams[name].cur;  // 讀出參數紀錄設定滑桿位置
+    });
+
+    // 下拉式選單選擇特定參數
+    SpecialSelect.addEventListener('change', function(){
+      SpecialName.innerHTML = "參數名稱：" + SpecialSelect.value;
+
+      SpecialSlider.value = 0;
+    });
+
+    // 拉動標準參數滑桿
+    LandarSlider.addEventListener('input', function(){
+      if(LandarSelect.value == 0) return;
+      let val = LandarSlider.value;
+      let name = LandarSelect.value;
+      let par = name[5].toLowerCase() + name.substring(6);  // e.g. ParamAngleX => angleX
+
+      // 更新左側滑桿
+      if(['ParamAngleX', 'ParamAngleY', 'ParamAngleZ', 'ParamBrowLY', 'ParamBrowRY', 'ParamBrowLX', 'ParamBrowRX'].includes(name)){
+        document.getElementById(name).value = val;
+      }
+
+      // 更新參數紀錄
+      LandarParams[name].cur = val;
+
+      // 更新模型參數
+      runModel(view => {
+        view[par] = val;
+      });
+    });
+
+    // 改變標準參數最小值
+    LandarMin.addEventListener('change', function(){
+      if(LandarSelect.value == 0) return;
+      if(LandarMin.value < LandarParams[LandarSelect.value].min || LandarMin.value > LandarParams[LandarSelect.value].max){
+        alert("超出範圍！");
+        LandarMin.value = LandarParams[LandarSelect.value].min;
+        return;
+      }
+      LandarSlider.min = LandarMin.value;
+    });
+
+    // 改變標準參數最大值
+    LandarMax.addEventListener('change', function(){
+      if(LandarSelect.value == 0) return;
+      if(LandarMax.value < LandarParams[LandarSelect.value].min || LandarMax.value > LandarParams[LandarSelect.value].max){
+        alert("超出範圍！");
+        LandarMax.value = LandarParams[LandarSelect.value].max
+        return;
+      }
+      LandarSlider.max = LandarMax.value;
+    });
+
+    // 改變特定參數最小值
+    SpecialMin.addEventListener('change', function(){
+      if(SpecialSelect.value == 0) return;
+      SpecialSlider.min = SpecialMin.value;
+    });
+
+    // 改變特定參數最大值
+    SpecialMax.addEventListener('change', function(){
+      if(SpecialSelect.value == 0) return;
+      SpecialSlider.max = SpecialMax.value;
+    });
+
+    // 拉動特定參數滑桿
+    SpecialSlider.addEventListener('input', function(){
+      if(SpecialSelect.value == 0) return;
+      let val = SpecialSlider.value;
+      let name = SpecialSelect.value;
+      let par = name[5].toLowerCase() + name.substring(6);
+
+      // 更新模型參數
+      runModel(view => {
+        view[par] = val;
+      });
+    });
+
+    // Medium baseline
+    document.querySelector('.Sliders').addEventListener('input', e => {
+      let val = parseFloat(e.target.value);
+      let id = e.target.id;
+      let par = id[5].toLowerCase() + id.substring(6);  // e.g. ParamAngleX => angleX
+
+      // 更新參數紀錄
+      LandarParams[id].cur = val;
+
+      // 更新模型參數
+      runModel(view => {
+        view[par] = val;
+      });
+    });
+
+
+  </script>
+</body>
+</html>

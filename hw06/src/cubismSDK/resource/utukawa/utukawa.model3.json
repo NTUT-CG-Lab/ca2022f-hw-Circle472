@@ -1,0 +1,18 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "utukawa.moc3",
+		"Textures": [
+			"textures/texture_00.png"
+		],
+		"Physics": "utukawa.physics3.json",
+		"DisplayInfo": "utukawa.cdi3.json"
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": []
+		}
+	]
+}
